@@ -33,22 +33,15 @@ export let dom = {
     showBoards: function (boards) {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
+        const template = document.querySelector('#board-template');
 
-        let boardList = '';
+        const boardsDiv = document.querySelector('#boards');
 
         for (let board of boards) {
-            boardList += `
-                <li>${board.title}</li>
-            `;
+            const clone = document.importNode(template.content, true);
+            clone.querySelector('.board-title').textContent = board.title;
+            boardsDiv.appendChild(clone);
         }
-
-        const outerHtml = `
-            <ul class="board-container">
-                ${boardList}
-            </ul>
-        `;
-
-        this._appendToElement(document.querySelector('#boards'), outerHtml);
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
