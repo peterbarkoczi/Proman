@@ -51,4 +51,21 @@ export let dom = {
         // it adds necessary event listeners also
     },
     // here comes more features
+
+    createBoardButtonHandler: function (boardCreator, divCreateBoard, buttonCreateBoard) {
+        boardCreator.setAttribute('id', 'board-creator');
+        boardCreator.innerHTML = `<input type="text" id="new-board-name">
+                                  <button id="save-button">Save</button>`;
+        divCreateBoard.appendChild(boardCreator);
+        buttonCreateBoard.disabled = true;
+    },
+
+    escHandler: function (buttonCreateBoard, boardCreator) {
+        document.addEventListener('keydown', function () {
+            if (event.key === 'Escape') {
+                boardCreator.remove();
+                buttonCreateBoard.disabled = false;
+            }
+        })
+    }
 };

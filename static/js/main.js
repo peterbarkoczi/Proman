@@ -1,4 +1,4 @@
-import { dom } from "./dom.js";
+import {dom} from "./dom.js";
 
 // This function is to initialize the application
 function init() {
@@ -9,25 +9,19 @@ function init() {
     initEventListeners();
 }
 
-
 function initEventListeners() {
-    newBoardListener();
+    newBoardListeners();
 }
 
-function newBoardListener() {
-    const createBoardButton = document.querySelector("#create-board");
-    const boards = document.querySelector("#boards");
+function newBoardListeners() {
+    const divCreateBoard = document.querySelector("#create-board");
+    const buttonCreateBoard = document.querySelector("#create-board-button");
+    const boardCreator = document.createElement("div");
 
-    createBoardButton.addEventListener('click', function () {
-
-        const boardCreator = document.createElement("div");
-        boardCreator.setAttribute('id', 'board-creator');
-        boardCreator.innerHTML = `<input type="text" id="new-board-name">
-                                  <button id="save-button">Save</button>`;
-
-        createBoardButton.appendChild(boardCreator);
-
+    buttonCreateBoard.addEventListener('click', function () {
+        dom.createBoardButtonHandler(boardCreator, divCreateBoard, buttonCreateBoard);
     });
+    dom.escHandler(buttonCreateBoard, boardCreator);
 }
 
 init();
