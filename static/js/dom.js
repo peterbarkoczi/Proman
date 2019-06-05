@@ -50,8 +50,6 @@ export let dom = {
         // shows the cards of a board
         // it adds necessary event listeners also
     },
-    // here comes more features
-
     createBoardButtonHandler: function (boardCreator, divCreateBoard, buttonCreateBoard) {
         boardCreator.setAttribute('id', 'board-creator');
         boardCreator.innerHTML = `<input type="text" id="new-board-name">
@@ -59,7 +57,6 @@ export let dom = {
         divCreateBoard.appendChild(boardCreator);
         buttonCreateBoard.disabled = true;
     },
-
     escHandler: function (buttonCreateBoard, boardCreator) {
         document.addEventListener('keydown', function () {
             if (event.key === 'Escape') {
@@ -67,5 +64,14 @@ export let dom = {
                 buttonCreateBoard.disabled = false;
             }
         })
+    },
+    createBoard: function (boardName) {
+        const template = document.querySelector("#board-template");
+        const clone = document.importNode(template.content, true);
+        const name = clone.querySelector(".board-title");
+        const boards = document.querySelector("#boards");
+        name.textContent = boardName;
+        boards.appendChild(clone);
+
     }
 };

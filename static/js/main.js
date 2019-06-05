@@ -13,15 +13,33 @@ function initEventListeners() {
     newBoardListeners();
 }
 
+function saveButtonListener() {
+    const saveButton = document.querySelector("#save-button");
+    saveButton.addEventListener('click', saveButtonFunction);
+    document.addEventListener('keydown', function () {
+        if (event.key === 'Enter') {
+            let boardName = saveButtonFunction();
+            dom.createBoard(boardName);
+        }
+    });
+}
+
+function saveButtonFunction() {
+    const boardNameField = document.querySelector('#new-board-name');
+    let boardName = boardNameField.value;
+    return boardName
+}
+
 function newBoardListeners() {
     const divCreateBoard = document.querySelector("#create-board");
     const buttonCreateBoard = document.querySelector("#create-board-button");
-    const boardCreator = document.createElement("div");
+    const boardCreatorField = document.createElement("div");
 
     buttonCreateBoard.addEventListener('click', function () {
-        dom.createBoardButtonHandler(boardCreator, divCreateBoard, buttonCreateBoard);
+        dom.createBoardButtonHandler(boardCreatorField, divCreateBoard, buttonCreateBoard);
+        saveButtonListener();
     });
-    dom.escHandler(buttonCreateBoard, boardCreator);
+    dom.escHandler(buttonCreateBoard, boardCreatorField);
 }
 
 init();
