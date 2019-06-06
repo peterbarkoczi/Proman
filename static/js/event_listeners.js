@@ -12,3 +12,19 @@ function newBoardListeners() {
         dom.boardCreatorButtonHandler(boardCreatorBox, boardCreatorButton);
     });
 }
+
+export function boardHeaderListener() {
+    const boards = document.querySelectorAll('.board');
+    for (let board of boards) {
+        let boardHeader = board.querySelector('.board-header');
+        boardHeader.addEventListener('click', function() {
+            let boardColumns = board.querySelector('.board-columns');
+            if (boardColumns.classList.contains('hidden')) {
+                boardColumns.classList.remove('hidden')
+            } else {
+                boardColumns.classList.add('hidden')
+            }
+        })
+    }
+
+}

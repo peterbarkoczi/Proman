@@ -165,8 +165,11 @@ section.board {
     background: rgba(0, 0, 0, 0.2);
     }
 
-
 #new-board-name,
 #board-save-button {
     padding: 4px 10px;
+}
+
+.hidden {
+    display: none;
 }
