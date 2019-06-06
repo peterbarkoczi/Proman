@@ -1,4 +1,5 @@
-import { dom } from "./dom.js";
+import {dom} from "./dom.js";
+import {initEventListeners} from "./event_listeners.js";
 
 // This function is to initialize the application
 function init() {
@@ -6,7 +7,9 @@ function init() {
     dom.init();
     // loads the boards to the screen
     dom.loadBoards();
-
+    // places all event listeners
+    initEventListeners();
 }
+
 
 init();

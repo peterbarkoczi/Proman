@@ -21,6 +21,16 @@ def _read_csv(file_name):
         return formatted_data
 
 
+def _write_csv(file_name, new_id, new_board_title):
+    new_row = f'{new_id},"{new_board_title}"\n'
+    with open(file_name, 'a') as boards:
+        boards.write(new_row)
+
+
+def write_boards(new_id, new_board_title):
+    return _write_csv(BOARDS_FILE, new_id, new_board_title)
+
+
 def _get_data(data_type, file, force):
     """
     Reads defined type of data from file or cache
