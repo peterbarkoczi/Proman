@@ -1,6 +1,7 @@
-from flask import Flask, render_template, url_for
-from util import json_response
+from flask import Flask, render_template, url_for, request, redirect
+from util import json_response, get_new_id
 
+import persistence
 import data_handler
 
 app = Flask(__name__)
@@ -31,6 +32,15 @@ def get_cards_for_board(board_id: int):
     :param board_id: id of the parent board
     """
     return data_handler.get_cards_for_board(board_id)
+
+
+@app.route("/new-board", methods=['POST'])
+def new_board():
+    boards = persistence.get_boards()
+    new_id = get_new_id(boards)
+    new_board_title = request.form["new-board-name"]
+    persistence.write_boards(new_id, new_board_title)
+    return redirect(url_for('index'))
 
 
 def main():
