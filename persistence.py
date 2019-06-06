@@ -21,14 +21,28 @@ def _read_csv(file_name):
         return formatted_data
 
 
-def _write_csv(file_name, new_id, new_board_title):
+def _append_csv(file_name, new_id, new_board_title):
     new_row = f'{new_id},"{new_board_title}"\n'
     with open(file_name, 'a') as boards:
         boards.write(new_row)
 
 
-def write_boards(new_id, new_board_title):
-    return _write_csv(BOARDS_FILE, new_id, new_board_title)
+def append_boards(new_id, new_board_title='New Board'):
+    return _append_csv(BOARDS_FILE, new_id, new_board_title)
+
+
+def _update_csv(file_name, updated_boards):
+    with open(file_name, 'w', newline='') as boards:
+        field_names = ['id', 'title']
+        writer = csv.DictWriter(boards, fieldnames=field_names)
+
+        writer.writeheader()
+        for board in updated_boards:
+            writer.writerow(board)
+
+
+def update_boards(boards):
+    return _update_csv(BOARDS_FILE, boards)
 
 
 def _get_data(data_type, file, force):

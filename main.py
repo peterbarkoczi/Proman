@@ -39,7 +39,22 @@ def new_board():
     boards = persistence.get_boards()
     new_id = get_new_id(boards)
     new_board_title = request.form["new-board-name"]
-    persistence.write_boards(new_id, new_board_title)
+    if new_board_title == "":
+        persistence.append_boards(new_id)
+    else:
+        persistence.append_boards(new_id, new_board_title)
+    return redirect(url_for('index'))
+
+
+@app.route("/rename-board", methods=['POST'])
+def rename_board():
+    old_title = request.form['old-title']
+    new_title = request.form['new-title']
+    boards = data_handler.get_boards()
+    for board in boards:
+        if board['title'] == old_title:
+            board['title'] = new_title
+    persistence.update_boards(boards)
     return redirect(url_for('index'))
 
 
