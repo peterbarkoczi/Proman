@@ -1,6 +1,6 @@
 // It uses data_handler.js to visualize elements
 import {dataHandler} from "./data_handler.js";
-import {boardHeaderListener} from "./event_listeners.js";
+import {boardHeaderListener, boardTitleListneres} from "./event_listeners.js";
 
 export let dom = {
     _appendToElement: function (elementToExtend, textToAppend, prepend = false) {
@@ -30,6 +30,7 @@ export let dom = {
             this.showBoards(boards);
             this.hideLoading();
             boardHeaderListener();
+            boardTitleListneres();
         });
     },
     showBoards: function (boards) {
@@ -63,14 +64,14 @@ export let dom = {
         fakeDiv.appendChild(boardNamerBox);
         boardNamerBox.innerHTML = `<form action="/new-board" method="post">
                                        <input type="text" id="new-board-name" 
-                                              name="new-board-name" placeholder="Board name">
+                                              name="new-board-name" placeholder="Board name" autofocus>
                                        <button id="board-save-button">Save</button>
                                    </form>`;
 
         boardCreatorButton.disabled = true;
 
         dom.escapeNewBoardHandler(fakeDiv, boardCreatorButton);
-        dom.saveNewBoardHandler(fakeDiv, boardCreatorButton);
+    //  dom.saveNewBoardHandler(fakeDiv, boardCreatorButton);
     },
     /* saveNewBoardHandler: function (whatToClose, boardCreatorButton) {
         const boardSaveButton = document.querySelector('#board-save-button');

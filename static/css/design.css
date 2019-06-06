@@ -50,7 +50,8 @@ section.board {
     border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
-.board-title {
+.board-title,
+.rename-field {
     margin: 13px;
     display: inline-block;
     font-size: 20px;
@@ -148,6 +149,7 @@ section.board {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 12px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 #new-board-name {
@@ -162,7 +164,7 @@ section.board {
     top: 0;
     left: 0;
     z-index: 1;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.5);
     }
 
 #new-board-name,
