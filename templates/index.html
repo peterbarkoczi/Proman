@@ -14,14 +14,14 @@
     <link rel="icon" type="image/png" sizes="16x16"
           href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/design.css') }}">
     <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 </head>
 <body>
 <h1>ProMan</h1>
 
-<div id="create-board">
-    <button id="create-board-button">Create new board</button>
+<div id="board-creator-box">
+    <button id="board-creator-button">Create new board</button>
 </div>
 
 <div id="boards"><p id="loading">Boards are loading...</p></div>

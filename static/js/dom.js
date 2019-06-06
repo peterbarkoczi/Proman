@@ -21,7 +21,7 @@ export let dom = {
         // This function should run once, when the page is loaded.
     },
     hideLoading: function () {
-        document.querySelector('#loading').style.display = 'none';
+        document.querySelector('#loading').remove();
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
@@ -50,21 +50,49 @@ export let dom = {
         // shows the cards of a board
         // it adds necessary event listeners also
     },
-    // here comes more features
+    boardCreatorButtonHandler: function (boardCreatorBox, boardCreatorButton) {
+        const boardNamerBox = document.createElement("div");
+        boardNamerBox.setAttribute('id', 'board-namer-box');
+        boardCreatorBox.appendChild(boardNamerBox);
+        boardNamerBox.innerHTML = `<input type="text" id="new-board-name">
+                                  <button id="board-save-button">Save</button>`;
 
-    createBoardButtonHandler: function (boardCreator, divCreateBoard, buttonCreateBoard) {
-        boardCreator.setAttribute('id', 'board-creator');
-        boardCreator.innerHTML = `<input type="text" id="new-board-name">
-                                  <button id="save-button">Save</button>`;
-        divCreateBoard.appendChild(boardCreator);
-        buttonCreateBoard.disabled = true;
+        boardCreatorButton.disabled = true;
+
+        dom.escapeNewBoardHandler(boardNamerBox, boardCreatorButton);
+        dom.saveNewBoardHandler(boardNamerBox, boardCreatorButton);
     },
+    saveNewBoardHandler: function (boardNamerBox, boardCreatorButton) {
+        const boardSaveButton = document.querySelector('#board-save-button');
+        boardSaveButton.addEventListener('click', function () {
+            dom.saveBoard(boardNamerBox, boardCreatorButton)
+        });
+        document.addEventListener('keydown', function () {
+            if (event.key === "Enter") dom.saveBoard(boardNamerBox, boardCreatorButton);
+        });
+    },
+    saveBoard: function (boardNamerBox, boardCreatorButton) {
+        let boardName = document.querySelector('#new-board-name').value;
+        dom.createNewBoard(boardName);
+        dom.closeBoardCreatorBox(boardNamerBox, boardCreatorButton)
+    },
+    createNewBoard: function (boardName) {
+        const boardTemplate = document.querySelector('#board-template');
+        const clone = document.importNode(boardTemplate.content, true);
+        const boardTitle = clone.querySelector('.board-title');
+        const boardContainer = document.querySelector('#boards');
 
-    escHandler: function (buttonCreateBoard, boardCreator) {
+        boardTitle.textContent = boardName;
+        boardContainer.appendChild(clone);
+    },
+    closeBoardCreatorBox: function (boardCreatorBox, boardCreatorButton) {
+        boardCreatorBox.remove();
+        boardCreatorButton.disabled = false;
+    },
+    escapeNewBoardHandler: function (boardCreatorBox, boardCreatorButton) {
         document.addEventListener('keydown', function () {
             if (event.key === 'Escape') {
-                boardCreator.remove();
-                buttonCreateBoard.disabled = false;
+                dom.closeBoardCreatorBox(boardCreatorBox, boardCreatorButton);
             }
         })
     }
