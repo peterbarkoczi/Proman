@@ -12,6 +12,7 @@ def index():
     """
     This is a one-pager which shows all the boards and cards
     """
+    data_handler.get_card_status(1)
     return render_template('index.html')
 
 
@@ -55,6 +56,18 @@ def rename_board():
         if board['title'] == old_title:
             board['title'] = new_title
     persistence.update_boards(boards)
+    return redirect(url_for('index'))
+
+
+@app.route("/rename-column", methods=['POST'])
+def rename_column():
+    old_title = request.form['old-title'].lower()
+    new_title = request.form['new-title']
+    columns = persistence.get_statuses()
+    for column in columns:
+        if column['title'] == old_title:
+            column['title'] = new_title
+    persistence.update_columns(columns)
     return redirect(url_for('index'))
 
 

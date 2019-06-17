@@ -45,6 +45,10 @@ def update_boards(boards):
     return _update_csv(BOARDS_FILE, boards)
 
 
+def update_columns(columns):
+    return _update_csv(STATUSES_FILE, columns)
+
+
 def _get_data(data_type, file, force):
     """
     Reads defined type of data from file or cache

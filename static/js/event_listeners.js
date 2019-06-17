@@ -31,7 +31,7 @@ function toggleBoard(board) {
     boardColumns.classList.toggle('hidden')
 }
 
-export function boardTitleListneres() {
+export function boardTitleListeners() {
     const boardTitles = document.querySelectorAll('.board-title');
     for (let boardTitle of boardTitles) {
         boardTitle.addEventListener('click', function() {
@@ -40,11 +40,30 @@ export function boardTitleListneres() {
     }
 }
 
+export function columnTitleListeners() {
+    const columnTitles = document.querySelectorAll('.board-column-title');
+    for (let columnTitle of columnTitles) {
+        columnTitle.addEventListener('click', function() {
+            renameColumn(columnTitle.textContent, event.target)
+        })
+    }
+}
+
 function renameBoard(oldTitle, newTitle) {
-    console.log(newTitle);
     let inputField = document.createElement('form');
     inputField.setAttribute('class', 'rename-field');
     inputField.setAttribute('action', '/rename-board');
+    inputField.setAttribute('method', 'POST');
+    inputField.innerHTML = `<input type="text" hidden name="old-title" value="${oldTitle}">
+                            <input type="text" name="new-title" value="${oldTitle}">
+                            <button type="submit">Save</button>`;
+    newTitle.parentNode.replaceChild(inputField, newTitle)
+}
+
+function renameColumn(oldTitle, newTitle) {
+    let inputField = document.createElement('form');
+    inputField.setAttribute('class', 'rename-field');
+    inputField.setAttribute('action', '/rename-column');
     inputField.setAttribute('method', 'POST');
     inputField.innerHTML = `<input type="text" hidden name="old-title" value="${oldTitle}">
                             <input type="text" name="new-title" value="${oldTitle}">

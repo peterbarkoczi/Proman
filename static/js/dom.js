@@ -1,6 +1,6 @@
 // It uses data_handler.js to visualize elements
 import {dataHandler} from "./data_handler.js";
-import {boardHeaderListener, boardTitleListneres} from "./event_listeners.js";
+import {boardHeaderListener, boardTitleListeners, columnTitleListeners} from "./event_listeners.js";
 
 export let dom = {
     _appendToElement: function (elementToExtend, textToAppend, prepend = false) {
@@ -30,7 +30,8 @@ export let dom = {
             this.showBoards(boards);
             this.hideLoading();
             boardHeaderListener();
-            boardTitleListneres();
+            boardTitleListeners();
+            columnTitleListeners();
         });
     },
     showBoards: function (boards) {
