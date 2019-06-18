@@ -71,17 +71,17 @@ export let dom = {
         const boardNamerBox = document.createElement("div");
         boardNamerBox.setAttribute('id', 'board-namer-box');
         fakeDiv.appendChild(boardNamerBox);
-        boardNamerBox.innerHTML = `<form action="">
+        boardNamerBox.innerHTML = `<form action="" id="name-form">
                                    <input type="text" id="new-board-name" 
                                    name="new-board-name" placeholder="Board name" autofocus>
                                    <button id="board-save-button">Save</button>
                                    </form>`;
 
-        const saveButton = document.querySelector("#board-save-button");
+        const nameForm = document.querySelector("#name-form");
 
         dom.escapeNewBoardHandler(fakeDiv, boardCreatorButton);
 
-        saveButton.addEventListener('click', function (event) {
+        nameForm.addEventListener('submit', function (event) {
             console.log(event.type);
             const boardTitle = boardNamerBox.querySelector("#new-board-name").value;
 
