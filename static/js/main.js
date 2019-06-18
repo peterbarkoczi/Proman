@@ -8,7 +8,6 @@ function init() {
     // loads the boards to the screen
     dom.loadBoards();
     // places all event listeners
-    initEventListeners();
 }
 
 

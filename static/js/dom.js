@@ -1,6 +1,7 @@
 // It uses data_handler.js to visualize elements
 import {dataHandler} from "./data_handler.js";
-import {boardHeaderListener, boardTitleListeners, columnTitleListeners} from "./event_listeners.js";
+import {initEventListeners} from "./event_listeners.js";
+
 
 export let dom = {
     _appendToElement: function (elementToExtend, textToAppend, prepend = false) {
@@ -29,9 +30,7 @@ export let dom = {
         dataHandler.getBoards((boards) => {
             this.showBoards(boards);
             this.hideLoading();
-            boardHeaderListener();
-            boardTitleListeners();
-            columnTitleListeners();
+            initEventListeners();
         });
     },
     showBoards: function (boards) {
@@ -46,6 +45,15 @@ export let dom = {
             clone.querySelector('.board-title').textContent = board.title;
             boardsDiv.appendChild(clone);
         }
+    },
+    showBoard: function (board) {
+        const template = document.querySelector('#board-template');
+
+        const boardsDiv = document.querySelector('#boards');
+
+        const clone = document.importNode(template.content, true);
+        clone.querySelector('.board-title').textContent = board.title;
+        boardsDiv.appendChild(clone);
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
@@ -63,40 +71,27 @@ export let dom = {
         const boardNamerBox = document.createElement("div");
         boardNamerBox.setAttribute('id', 'board-namer-box');
         fakeDiv.appendChild(boardNamerBox);
-        boardNamerBox.innerHTML = `<form action="/new-board" method="post">
-                                       <input type="text" id="new-board-name" 
-                                              name="new-board-name" placeholder="Board name" autofocus>
-                                       <button id="board-save-button">Save</button>
+        boardNamerBox.innerHTML = `<form action="">
+                                   <input type="text" id="new-board-name" 
+                                   name="new-board-name" placeholder="Board name" autofocus>
+                                   <button id="board-save-button">Save</button>
                                    </form>`;
 
-        boardCreatorButton.disabled = true;
+        const saveButton = document.querySelector("#board-save-button");
 
         dom.escapeNewBoardHandler(fakeDiv, boardCreatorButton);
-    //  dom.saveNewBoardHandler(fakeDiv, boardCreatorButton);
-    },
-    /* saveNewBoardHandler: function (whatToClose, boardCreatorButton) {
-        const boardSaveButton = document.querySelector('#board-save-button');
-        boardSaveButton.addEventListener('click', function () {
-            dom.saveBoard(whatToClose, boardCreatorButton)
-        });
-        document.addEventListener('keydown', function () {
-            if (event.key === "Enter") dom.saveBoard(whatToClose, boardCreatorButton);
-        });
-    },
-    saveBoard: function (whatToClose, boardCreatorButton) {
-        let boardName = document.querySelector('#new-board-name').value;
-        dom.createNewBoard(boardName);
-        dom.closeBox(whatToClose, boardCreatorButton)
-    },
-    createNewBoard: function (boardName) {
-        const boardTemplate = document.querySelector('#board-template');
-        const clone = document.importNode(boardTemplate.content, true);
-        const boardTitle = clone.querySelector('.board-title');
-        const boardContainer = document.querySelector('#boards');
 
-        boardTitle.textContent = boardName;
-        boardContainer.appendChild(clone);
-    }, */
+        saveButton.addEventListener('click', function (event) {
+            console.log(event.type);
+            const boardTitle = boardNamerBox.querySelector("#new-board-name").value;
+
+            dataHandler.createNewBoard(boardTitle,
+                response => dataHandler.getBoard(response,
+                    board => dom.showBoard(board)
+                )
+            )
+        });
+    },
     closeBox: function (whatToClose, boardCreatorButton) {
         whatToClose.remove();
         boardCreatorButton.disabled = false;
@@ -108,7 +103,6 @@ export let dom = {
             }
         });
         whatToClose.addEventListener('click', function () {
-            console.log(event.target.id);
             if (event.target.id === 'fake-div') {
                 dom.closeBox(whatToClose, boardCreatorButton)
             }
