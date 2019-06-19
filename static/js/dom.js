@@ -38,17 +38,21 @@ export let dom = {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
         const template = document.querySelector('#board-template');
-
         const boardsDiv = document.querySelector('#boards');
 
         for (let board of boards) {
             const clone = document.importNode(template.content, true);
             clone.querySelector('.board-title').textContent = board.title;
+            clone.querySelector("section").setAttribute("id", board.id);
+            console.log(clone);
             boardsDiv.appendChild(clone);
+            let boardId = board.id;
+            this.loadCards(boardId);
         }
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
+        dataHandler.getCardsByBoardId(boardId)
     },
     showCards: function (cards) {
         // shows the cards of a board
