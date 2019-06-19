@@ -2,6 +2,9 @@ import {dom} from "./dom.js";
 
 export function initEventListeners() {
     newBoardListeners();
+    boardHeaderListener();
+    boardTitleListeners();
+    columnTitleListeners();
 }
 
 function newBoardListeners() {
@@ -34,7 +37,7 @@ function toggleBoard(board) {
 export function boardTitleListeners() {
     const boardTitles = document.querySelectorAll('.board-title');
     for (let boardTitle of boardTitles) {
-        boardTitle.addEventListener('click', function() {
+        boardTitle.addEventListener('click', function () {
             renameBoard(boardTitle.textContent, event.target)
         })
     }
@@ -43,7 +46,7 @@ export function boardTitleListeners() {
 export function columnTitleListeners() {
     const columnTitles = document.querySelectorAll('.board-column-title');
     for (let columnTitle of columnTitles) {
-        columnTitle.addEventListener('click', function() {
+        columnTitle.addEventListener('click', function () {
             renameColumn(columnTitle.textContent, event.target)
         })
     }
