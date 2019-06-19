@@ -77,20 +77,19 @@ export let dom = {
         const boardNamerBox = document.createElement("div");
         boardNamerBox.setAttribute('id', 'board-namer-box');
         fakeDiv.appendChild(boardNamerBox);
-        boardNamerBox.innerHTML = `<form action="" id="name-form">
+        boardNamerBox.innerHTML = `<form action="#" id="name-form">
                                    <input type="text" id="new-board-name" 
                                    name="new-board-name" placeholder="Board name" autofocus>
                                    <button id="board-save-button">Save</button>
                                    </form>`;
 
         const nameForm = document.querySelector("#name-form");
-
         dom.escapeNewBoardHandler(fakeDiv, boardCreatorButton);
 
         nameForm.addEventListener('submit', function (event) {
-            console.log(event.type);
+            event.preventDefault();
+            dom.closeBox(fakeDiv);
             const boardTitle = boardNamerBox.querySelector("#new-board-name").value;
-
             dataHandler.createNewBoard(boardTitle,
                 response => dataHandler.getBoard(response,
                     board => dom.showBoard(board)
@@ -98,19 +97,18 @@ export let dom = {
             )
         });
     },
-    closeBox: function (whatToClose, boardCreatorButton) {
+    closeBox: function (whatToClose) {
         whatToClose.remove();
-        boardCreatorButton.disabled = false;
     },
-    escapeNewBoardHandler: function (whatToClose, boardCreatorButton) {
+    escapeNewBoardHandler: function (whatToClose) {
         document.addEventListener('keydown', function () {
             if (event.key === 'Escape') {
-                dom.closeBox(whatToClose, boardCreatorButton);
+                dom.closeBox(whatToClose);
             }
         });
         whatToClose.addEventListener('click', function () {
             if (event.target.id === 'fake-div') {
-                dom.closeBox(whatToClose, boardCreatorButton)
+                dom.closeBox(whatToClose)
             }
         })
     }
