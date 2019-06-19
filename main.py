@@ -12,7 +12,7 @@ def index():
     """
     This is a one-pager which shows all the boards and cards
     """
-    data_handler.get_card_status(1)
+    # data_handler.get_card_status(1)
     return render_template('index.html')
 
 
@@ -25,6 +25,12 @@ def get_boards():
     return data_handler.get_boards()
 
 
+@app.route("/get-board")
+@json_response
+def get_board():
+    return data_handler.get_board() #Refactor
+
+
 @app.route("/get-cards/<int:board_id>")
 @json_response
 def get_cards_for_board(board_id: int):
@@ -35,16 +41,16 @@ def get_cards_for_board(board_id: int):
     return data_handler.get_cards_for_board(board_id)
 
 
-@app.route("/new-board", methods=['POST'])
+@app.route("/new-board")
 def new_board():
     boards = persistence.get_boards()
-    new_id = get_new_id(boards)
-    new_board_title = request.form["new-board-name"]
+    new_id = str(get_new_id(boards))
+    new_board_title = request.args.get("new-board-name")
     if new_board_title == "":
         persistence.append_boards(new_id)
     else:
         persistence.append_boards(new_id, new_board_title)
-    return redirect(url_for('index'))
+    return new_id
 
 
 @app.route("/rename-board", methods=['POST'])

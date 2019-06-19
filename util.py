@@ -16,6 +16,6 @@ def json_response(func):
 
 
 def get_new_id(boards):
-    last_board = max(boards, key=lambda x: x['id'])
+    last_board = max(boards, key=lambda x: int(x['id']))
     last_id = int(last_board['id'])
     return last_id + 1

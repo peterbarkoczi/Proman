@@ -19,6 +19,11 @@ def get_boards():
     return persistence.get_boards(force=True)
 
 
+def get_board():
+    all_boards = persistence.get_boards(force=True)
+    return all_boards[-1] #TEST!!
+
+
 def get_cards_for_board(board_id):
     persistence.clear_cache()
     all_cards = persistence.get_cards()
