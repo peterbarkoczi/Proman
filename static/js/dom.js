@@ -52,7 +52,9 @@ export let dom = {
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
-        dataHandler.getCardsByBoardId(boardId)
+        dataHandler.getCardsByBoardId(boardId, (cards) => {
+            this.showCards(cards)
+        })
     },
     showCards: function (cards) {
         // shows the cards of a board
