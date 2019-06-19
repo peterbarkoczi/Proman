@@ -43,7 +43,6 @@ export let dom = {
             const clone = document.importNode(template.content, true);
             clone.querySelector('.board-title').textContent = board.title;
             clone.querySelector("section").setAttribute("id", board.id);
-            console.log(clone);
             boardsDiv.appendChild(clone);
             let boardId = board.id;
             this.loadCards(boardId);
@@ -51,10 +50,9 @@ export let dom = {
     },
     showBoard: function (board) {
         const template = document.querySelector('#board-template');
-
         const boardsDiv = document.querySelector('#boards');
-
         const clone = document.importNode(template.content, true);
+
         clone.querySelector('.board-title').textContent = board.title;
         boardsDiv.appendChild(clone);
     },
@@ -66,7 +64,20 @@ export let dom = {
     },
     showCards: function (cards) {
         // shows the cards of a board
-        // it adds necessary event listeners also
+        // it adds necessary event listeners also;
+        let boardId = cards[0].board_id;
+        let board = document.querySelector(`.board[id="${boardId}"]`);
+        for (let card of cards) {
+            let status = card.status_id;
+            console.log(status);
+            let column = board.querySelector(`.board-column-content[data-status="${status}"]`);
+            let newCard = document.createElement("div");
+            newCard.setAttribute("class", "card");
+            newCard.textContent = card.title;
+            column.appendChild(newCard);
+        }
+
+
     },
     boardCreatorButtonHandler: function (boardCreatorBox, boardCreatorButton) {
         const fakeDiv = document.createElement('div');

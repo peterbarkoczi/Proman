@@ -1,5 +1,4 @@
 import {dom} from "./dom.js";
-import {initEventListeners} from "./event_listeners.js";
 
 // This function is to initialize the application
 function init() {
@@ -9,6 +8,5 @@ function init() {
     dom.loadBoards();
     // places all event listeners
 }
-
 
 init();
