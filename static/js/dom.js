@@ -57,6 +57,7 @@ export let dom = {
 
         boardDiv.querySelector('.board-title').textContent = board.title;
         boardDiv.setAttribute('id', `${board.id}`);
+        boardDiv.querySelector(".board-columns").classList.remove("hidden");
         let boardHeader = boardDiv.querySelector('.board-header');
         boardHeader.addEventListener('click', function (event) {
             toggleBoard(event, boardDiv);
