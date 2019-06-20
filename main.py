@@ -32,13 +32,17 @@ def get_board():
     return data_handler.get_board()
 
 
-@app.route("/get-cards")
+@app.route("/save-card-position")
 @json_response
-def get_cards():
+def save_card_position():
     cards = persistence.get_cards(True)
     modified_card = json.loads(request.args.get('modified-card'))
     card_id = modified_card['id']
-    print(cards)
+    for card in cards:
+        if card['id'] == card_id:
+            cards.remove(card)
+    cards.append(modified_card)
+    persistence.save_cards(cards)
 
 
 @app.route("/get-cards/<int:board_id>")

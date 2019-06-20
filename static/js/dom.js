@@ -64,9 +64,7 @@ export let dom = {
         });
 
         let boardTitle = boardHeader.querySelector(".board-title");
-        console.log(boardTitle);
         boardTitle.addEventListener('click', function (event) {
-            console.log("meg van klikkelve");
             renameBoard(boardTitle.textContent, event.target)
         })
     },

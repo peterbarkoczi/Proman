@@ -77,3 +77,12 @@ def get_boards(force=False):
 
 def get_cards(force=False):
     return _get_data('cards', CARDS_FILE, force)
+
+
+def save_cards(cards):
+    with open(CARDS_FILE, "w", newline="") as file:
+        fieldnames = ["id", "board_id", "title", "status_id", "order"]
+        writer = csv.DictWriter(file, fieldnames=fieldnames, extrasaction="ignore")
+        writer.writeheader()
+        for card in cards:
+            writer.writerow(card)
