@@ -90,6 +90,7 @@ export let dom = {
             let column = board.querySelector(`.board-column-content[data-status="${status}"]`);
             let newCard = document.createElement("div");
             newCard.setAttribute("class", "card");
+            newCard.setAttribute("id", `${card.id}`);
             newCard.textContent = card.title;
             column.appendChild(newCard);
         }

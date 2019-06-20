@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect
 from util import json_response, get_new_id
+import json
 
 import persistence
 import data_handler
@@ -28,7 +29,16 @@ def get_boards():
 @app.route("/get-board")
 @json_response
 def get_board():
-    return data_handler.get_board() #Refactor
+    return data_handler.get_board()
+
+
+@app.route("/get-cards")
+@json_response
+def get_cards():
+    cards = persistence.get_cards(True)
+    modified_card = json.loads(request.args.get('modified-card'))
+    card_id = modified_card['id']
+    print(cards)
 
 
 @app.route("/get-cards/<int:board_id>")
