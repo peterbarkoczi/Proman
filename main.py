@@ -45,6 +45,16 @@ def save_card_position():
     persistence.save_cards(cards)
 
 
+@app.route("/save-deleted-card")
+def save_deleted_card():
+    cards = persistence.get_cards(True)
+    card_id = request.args.get("id")
+    for card in cards:
+        if card['id'] == card_id:
+            cards.remove(card)
+    persistence.save_cards(cards)
+
+
 @app.route("/get-cards/<int:board_id>")
 @json_response
 def get_cards_for_board(board_id: int):

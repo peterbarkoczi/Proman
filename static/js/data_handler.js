@@ -68,5 +68,8 @@ export let dataHandler = {
     // here comes more features
     saveCardPosition: function (newRow) {
         fetch(`/save-card-position?modified-card=${newRow}`)
+    },
+    saveDeletedCard: function (id) {
+        fetch(`/save-deleted-card?id=${id}`)
     }
 };
