@@ -27,7 +27,6 @@ export function boardHeaderListener() {
 }
 
 export function toggleBoard(event, board) {
-    console.log(event.target);
     if (!event.target.classList.contains('board-header')) {
         return;
     }
@@ -53,7 +52,7 @@ export function columnTitleListeners() {
     }
 }
 
-function renameBoard(oldTitle, newTitle) {
+export function renameBoard(oldTitle, newTitle) {
     let inputField = document.createElement('form');
     inputField.setAttribute('class', 'rename-field');
     inputField.setAttribute('action', '/rename-board');

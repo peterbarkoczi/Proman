@@ -1,7 +1,6 @@
 // It uses data_handler.js to visualize elements
 import {dataHandler} from "./data_handler.js";
-import {initEventListeners, toggleBoard} from "./event_listeners.js";
-
+import {initEventListeners, toggleBoard, renameBoard} from "./event_listeners.js";
 
 export let dom = {
     _appendToElement: function (elementToExtend, textToAppend, prepend = false) {
@@ -58,10 +57,18 @@ export let dom = {
         boardDiv.querySelector('.board-title').textContent = board.title;
         boardDiv.setAttribute('id', `${board.id}`);
         boardDiv.querySelector(".board-columns").classList.remove("hidden");
+
         let boardHeader = boardDiv.querySelector('.board-header');
         boardHeader.addEventListener('click', function (event) {
             toggleBoard(event, boardDiv);
         });
+
+        let boardTitle = boardHeader.querySelector(".board-title");
+        console.log(boardTitle);
+        boardTitle.addEventListener('click', function (event) {
+            console.log("meg van klikkelve");
+            renameBoard(boardTitle.textContent, event.target)
+        })
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
@@ -80,7 +87,6 @@ export let dom = {
         }
         for (let card of cards) {
             let status = card.status_id;
-            console.log(status);
             let column = board.querySelector(`.board-column-content[data-status="${status}"]`);
             let newCard = document.createElement("div");
             newCard.setAttribute("class", "card");
