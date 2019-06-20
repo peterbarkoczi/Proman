@@ -67,6 +67,10 @@ export let dom = {
         // it adds necessary event listeners also;
         let boardId = cards[0].board_id;
         let board = document.querySelector(`.board[id="${boardId}"]`);
+        if (cards.length > 0) {
+            let boardColumns = board.querySelector(".board-columns");
+            boardColumns.classList.remove("hidden")
+        }
         for (let card of cards) {
             let status = card.status_id;
             console.log(status);
