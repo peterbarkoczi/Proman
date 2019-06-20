@@ -4,7 +4,7 @@ export function initEventListeners() {
     newBoardListeners();
     boardHeaderListener();
     boardTitleListeners();
-    columnTitleListeners();
+    // columnTitleListeners();
 }
 
 function newBoardListeners() {
@@ -20,13 +20,14 @@ export function boardHeaderListener() {
     const boards = document.querySelectorAll('.board');
     for (let board of boards) {
         let boardHeader = board.querySelector('.board-header');
-        boardHeader.addEventListener('click', function () {
-            toggleBoard(board);
+        boardHeader.addEventListener('click', function (event) {
+            toggleBoard(event, board);
         })
     }
 }
 
-function toggleBoard(board) {
+export function toggleBoard(event, board) {
+    console.log(event.target);
     if (!event.target.classList.contains('board-header')) {
         return;
     }

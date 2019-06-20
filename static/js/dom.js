@@ -1,6 +1,6 @@
 // It uses data_handler.js to visualize elements
 import {dataHandler} from "./data_handler.js";
-import {initEventListeners} from "./event_listeners.js";
+import {initEventListeners, toggleBoard} from "./event_listeners.js";
 
 
 export let dom = {
@@ -52,9 +52,15 @@ export let dom = {
         const template = document.querySelector('#board-template');
         const boardsDiv = document.querySelector('#boards');
         const clone = document.importNode(template.content, true);
+        const boardDiv = clone.querySelector('section');
+        boardsDiv.appendChild(boardDiv);
 
-        clone.querySelector('.board-title').textContent = board.title;
-        boardsDiv.appendChild(clone);
+        boardDiv.querySelector('.board-title').textContent = board.title;
+        boardDiv.setAttribute('id', `${board.id}`);
+        let boardHeader = boardDiv.querySelector('.board-header');
+        boardHeader.addEventListener('click', function (event) {
+            toggleBoard(event, boardDiv);
+        });
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
